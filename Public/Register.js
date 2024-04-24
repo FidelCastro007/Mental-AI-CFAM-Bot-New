@@ -1,23 +1,3 @@
-/*const storedata = async () => {
-    const userinput = document.getElementById('username').value;
-    const userpasscode = document.getElementById('password').value;
-    console.log("Username:", userinput);
-    console.log("Password:", userpasscode);
-    try {
-        const apiresponse = await fetch('http://localhost:8000/register', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({"username":userinput,"password":userpasscode})
-        });
-        const res = await apiresponse.json();
-        console.log(res);
-    } catch (error) {
-        console.error(error);
-    }
-}*/
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('registration-form');
     console.log(form, "form data")
