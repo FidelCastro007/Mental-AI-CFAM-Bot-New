@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.status == 401) {
                 alert('Wrong : Username Or Password')
             }
+            if (response.status == 404) {
+                alert('User not found')
+            }
             if(response.status == 200)
             {
                 const data = await response.json();
