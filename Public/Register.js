@@ -4,7 +4,7 @@
     console.log("Username:", userinput);
     console.log("Password:", userpasscode);
     try {
-        const apiresponse = await fetch('http://localhost:8000/register', {
+        const apiresponse = await fetch('/register', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
