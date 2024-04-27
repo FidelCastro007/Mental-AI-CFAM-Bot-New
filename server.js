@@ -70,7 +70,7 @@ app.post('/login', async (req, res) => {
 
       const accessToken = jwt.sign({ username: user.username }, process.env.ACCESS_TOKEN_SECRET);
       console.log(accessToken, "access")
-      res.status(200).json({ "message": "Logged In Success" }).redirect('/login');
+      res.status(200).json({ "message": "Logged In Success" });
     } else {
       res.status(401).send("Invalid password");
     }
