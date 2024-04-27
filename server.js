@@ -48,7 +48,7 @@ app.post('/register', async (req, res) => {
     res.status(201).send({ "message": "User Registered Successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json(   {"message":"already This Username Registered"});
+    res.status(500).json({"message":"already This Username Registered"});
   }
 });
 
@@ -59,7 +59,7 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(404).send({"message": "User not found"});
+      return res.status(404).send("User not found");
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
@@ -70,9 +70,9 @@ app.post('/login', async (req, res) => {
 
       const accessToken = jwt.sign({ username: user.username }, process.env.ACCESS_TOKEN_SECRET);
       console.log(accessToken, "access")
-      res.status(200).json({ "message": "Logged In Success" });
+      res.status(200).json({ "message": "Logged In Success" }).redirect('/login');
     } else {
-      res.status(401).send({"message": "Invalid password"});
+      res.status(401).send("Invalid password");
     }
   } catch (err) {
     console.error(err);
@@ -80,13 +80,12 @@ app.post('/login', async (req, res) => {
   }
 });
 
-/* 
+
 // login route
 app.get('/login', (req, res) => {
-    if(req.body)
     res.sendFile(path.join(__dirname, 'Public', 'login.html'))
 })
-*/
+
 
 // Dashboard route
 app.get('/dashboard', (req, res) => {
@@ -97,22 +96,23 @@ app.get('/dashboard', (req, res) => {
     res.redirect('/'); // Redirect to login if not logged in
   }
 });
-    app.post('/api/chatgpt', async (req, res) => {
-        try {
-            const chatGPTResponse = await fetch('https://chat.freedomgpt.com/api/liberty', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(req.body),
-            });
 
-            const data = await chatGPTResponse.json();
-            res.json(data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    });
+app.post('/api/chatgpt', async (req, res) => {
+  try {
+      const chatGPTResponse = await fetch('https://chat.freedomgpt.com/api/liberty', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(req.body),
+      });
+
+      const data = await chatGPTResponse.json();
+      res.json(data);
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.listen(process.env.PORT, () => console.log(`Server is running on http://localhost:${process.env.PORT}`));
