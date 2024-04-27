@@ -97,5 +97,22 @@ app.get('/dashboard', (req, res) => {
     res.redirect('/'); // Redirect to login if not logged in
   }
 });
+    app.post('/api/chatgpt', async (req, res) => {
+        try {
+            const chatGPTResponse = await fetch('https://chat.freedomgpt.com/api/liberty', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(req.body),
+            });
+
+            const data = await chatGPTResponse.json();
+            res.json(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    });
 
 app.listen(process.env.PORT, () => console.log(`Server is running on http://localhost:${process.env.PORT}`));
