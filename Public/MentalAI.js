@@ -49,6 +49,31 @@ if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
   voiceIcon.classList.add('disabled');
 }
 
+// Function to display an initial dummy message from the bot
+function displayInitialMessage() {
+  var responseContainer = document.getElementById('response-container');
+
+  // Create a container for the bot's initial message
+  var botMessageContainer = document.createElement('div');
+  botMessageContainer.className = 'message-container bot';
+
+  // Add the bot's initial message content
+  var botMessageContent = document.createElement('div');
+  botMessageContent.className = 'typed';
+  botMessageContent.textContent = 'Hello! I am your MentalAI CFAMchatbot. How can I assist you today?';
+
+  // Append the message content to the message container
+  botMessageContainer.appendChild(botMessageContent);
+
+  // Append the message container to the response container
+  responseContainer.appendChild(botMessageContainer);
+
+  // Scroll to the bottom of the response container to show the message
+  responseContainer.scrollTop = responseContainer.scrollHeight;
+}
+
+// Call the function to display the initial message when the window loads
+window.addEventListener('load', displayInitialMessage);
 
 async function sendMessage() {
     try {
