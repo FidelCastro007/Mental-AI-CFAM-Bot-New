@@ -1,76 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('registration-form');
-    console.log(form, "form data")
-    const message = document.getElementById('message');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const username = formData.get('username');
+    const password = formData.get('password');
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    // ... (password validation logic) ...
 
-        const formData = new FormData(form);
-        const username = formData.get('username');
-        const password = formData.get('password');
-        console.log(password, "pass")
+    try {
+        const response = await fetch('/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
 
-          
-        let number = 0;
-        let charecter = 0;
-        let symbol = 0
+        // Ensure the response is JSON and handle accordingly
+        const data = await response.json();
 
-        if(password.length >= 8)
-        {
-
-           for(let i = 0; i < password.length-1 ; i++)
-           {
-
-            console.log(password[i])
-              if(password[i]  ==  "@" || "#" || "$" || "*" ) symbol++
-
-              if(Number(password[i]) >= 1 && Number(password[i]) <= Number.MAX_VALUE) number++
-
-              if(password[i] >= "a" && password[i] <= "z"  || password[i] >= "A" && password[i] <= "Z")  charecter++
-           }
+        if (response.status === 403) {
+            // Check if the response contains a message
+            alert(data.message || 'You do not have permission to access this resource.');
+        } else if (response.status === 201) {
+            alert(data.message || 'Registration successful!');
+            window.location.href = "/login";
+        } else {
+            // Handle other response statuses
+            alert('An unexpected error occurred. Please try again.');
         }
-
-        console.log(number, charecter, symbol)
-
-        if(number >= 1 && charecter >= 1 && symbol >= 1){
-
-
-        try {
-            const response = await fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            });
-
-            const data = await response.json();
-            if(response.status == 403)
-            {
-             
-                alert(data.message)
-             
-            }
-            if(response.status == 201)
-            {
-             
-                alert(data.message)
-                window.location.href = "/login"
-            }
-
-            // message.textContent = data.message;
-            alert(data.message)
-            form.reset();
-        } catch (error) {
-            console.error(error);
-            message.textContent = 'Registration failed. Please try again.';
-        }
-
+    } catch (error) {
+        console.error(error);
+        message.textContent = 'Registration failed. Please try again.';
     }
-
-    else
-
-    alert("Must Enter A Strong Password  with minimum 8 charecters & use special Charecters")
-    });
 });
