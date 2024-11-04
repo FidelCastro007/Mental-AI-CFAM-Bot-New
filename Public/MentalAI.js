@@ -103,7 +103,7 @@ async function sendMessage() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              apiKey:"hTwO6Atn9GOypsn4jTW7PMCPl1g2",
+              apiKey:"VbjlwpLV4td0t2kd6q8FiAOB1GO2",
                 messages: [{ role: 'user', content: userInput }],
             }),
         });
