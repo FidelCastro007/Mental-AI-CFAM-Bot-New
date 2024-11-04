@@ -68,14 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             if(response.status == 403)
             {
-             
                 alert(data.message)
-             
             }
             if(response.status == 201)
             {
-             
-                alert(data.message)
                 window.location.href = "/login"
             }
 
