@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // message.textContent = data.message;
-            alert(data.message)
             form.reset();
         } catch (error) {
             console.error(error);
